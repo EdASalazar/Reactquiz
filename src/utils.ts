@@ -1,4 +1,2 @@
-export default function utils() {
-  return console.log('')
-
-}
+export const shuffleArray = (array: any[]) =>
+[...array].sort(() => Math.random() - 0.5);
