@@ -4,8 +4,9 @@ import { fetchQuizQuestions } from './API';
 import QuestionCard from './components/QuestionCard';
 // Types
 import { QuestionState, Difficulty } from './API';
+import { updateExpressionWithTypeArguments } from 'typescript';
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -41,15 +42,35 @@ export default function App() {
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-
-  }
+    if(!gameOver) {
+      const answer = e.currentTarget.value;
+      // check answers against correct answer
+      const correct = questions[number].correct_answer === answer;
+      // add score if answer is correct
+      if (correct) setScore(prev => prev +1);
+      // save answer in the array
+      const AnswerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer,
+      };
+      setUserAnswers((prev) => [...prev, AnswerObject]);
+    }
+  };
 
   const nextQuestion = () => {
+    // move on to the next question if not the last question
+    const nextQuestion = number + 1;
+    if (nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true)
+    } else {
+      setNumber(nextQuestion);
+    }
+  };
 
-  }
+  console.log(questions, userAnswers);
 
-  console.log(questions)
-  
   return (
     <div className="App">
       <h1>REACT QUIZ</h1>
