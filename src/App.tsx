@@ -4,7 +4,7 @@ import { fetchQuizQuestions } from './API';
 import QuestionCard from './components/QuestionCard';
 // Types
 import { QuestionState, Difficulty } from './API';
-import { updateExpressionWithTypeArguments } from 'typescript';
+import { GlobalStyle, Wrapper } from './app.styles';
 
 export type AnswerObject = {
   question: string;
@@ -42,12 +42,12 @@ export default function App() {
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if(!gameOver) {
+    if (!gameOver) {
       const answer = e.currentTarget.value;
       // check answers against correct answer
       const correct = questions[number].correct_answer === answer;
       // add score if answer is correct
-      if (correct) setScore(prev => prev +1);
+      if (correct) setScore(prev => prev + 1);
       // save answer in the array
       const AnswerObject = {
         question: questions[number].question,
@@ -72,28 +72,31 @@ export default function App() {
   console.log(questions, userAnswers);
 
   return (
-    <div className="App">
-      <h1>REACT QUIZ</h1>
-      {gameOver || userAnswers.length === TOTAL_QUESTIONS ?
-        (<button className='start' onClick={startTrivia}>Start</button>)
-        : null}
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>REACT QUIZ</h1>
+        {gameOver || userAnswers.length === TOTAL_QUESTIONS ?
+          (<button className='start' onClick={startTrivia}>Start</button>)
+          : null}
 
-      {!gameOver ? <p className="score">Score: {score}</p> : null}
-      {loading && <p>Loading Questions....</p>}
-      {!loading && !gameOver && (
-        <QuestionCard
-          questionNum={number + 1}
-          totalQuestions={TOTAL_QUESTIONS}
-          question={questions[number].question}
-          answers={questions[number].answers}
-          userAnswer={userAnswers ? userAnswers[number] : undefined}
-          callback={checkAnswer}
-        />)}
-      {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ?
-        (
-          <button className="next" onClick={nextQuestion}>Next Question</button>
-        ) : null}
-    </div>
+        {!gameOver ? <p className="score">Score: {score}</p> : null}
+        {loading && <p>Loading Questions....</p>}
+        {!loading && !gameOver && (
+          <QuestionCard
+            questionNum={number + 1}
+            totalQuestions={TOTAL_QUESTIONS}
+            question={questions[number].question}
+            answers={questions[number].answers}
+            userAnswer={userAnswers ? userAnswers[number] : undefined}
+            callback={checkAnswer}
+          />)}
+        {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ?
+          (
+            <button className="next" onClick={nextQuestion}>Next Question</button>
+          ) : null}
+      </Wrapper>
+    </>
   );
 }
 
