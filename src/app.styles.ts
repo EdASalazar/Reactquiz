@@ -30,14 +30,14 @@ export const Wrapper = styled.div`
     }
 
     .score {
-      color: #fff;
+      color: teal;
       font-size: 2rem;
       margin: 0:
     }
 
     h1 {
       font-family: Fascinate Inline, 'Arial Narrow Bold', sans-serif;
-      background-image: linear-gradient(180deg, #fff, #87f1ff);
+      background-image: linear-gradient(180deg, #fff, teal);
       background-size: 100%;
       background-clip: text;
       -webkit-background-clip: text;
